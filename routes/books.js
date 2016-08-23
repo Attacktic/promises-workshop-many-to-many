@@ -16,7 +16,9 @@ function Authors() {
 }
 
 router.get('/', function(req, res, next) {
-  // your code here
+  helpers.getAllBooksData().then(function(books){
+    res.render('books/index', {books: books});
+  })
 });
 
 router.get('/new', function(req, res, next) {
@@ -55,7 +57,7 @@ router.get('/:id/edit', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-  // your code here 
+  // your code here
 });
 
 router.post('/:id', function(req, res, next) {

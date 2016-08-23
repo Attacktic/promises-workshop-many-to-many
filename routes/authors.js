@@ -18,14 +18,9 @@ function Authors_Books() {
 
 
 router.get('/', function(req, res, next) {
-  // get all authors from Authors
-  // THEN for each author, go get all of their book ids from Authors_Books
-  // THEN go get all that author's books
-  // AND add the array of books to the author object as 'books'
-  // render the appropriate template
-  // pass an array of authors to the view using locals
-
-  // EXAMPLE: { first_name: 'Laura', last_name: 'Lou', bio: 'her bio', books: [ this should be all of her book objects ]}
+  helpers.getAllAuthorsData().then(function(authors){
+    res.render('authors/index', {authors: authors});
+  })
 });
 
 router.get('/new', function(req, res, next) {
@@ -64,11 +59,9 @@ router.post('/:id/delete', function (req, res, next) {
 })
 
 router.get('/:id/edit', function (req, res, next) {
-  // find the author in Authors
-  // get all of the authors book_ids from Authors_Books
-  // get all of the authors books from BOOKs
-  // render the corresponding template
-  // use locals to pass books and author to the view
+  helpers.getAuthorBooks(req.params.id).then(function(author){
+    res.render('authors/edit', {author: author, author_books: author.books, books: author.books});
+  })
 })
 
 router.post('/:id', function (req, res, next) {
@@ -83,11 +76,9 @@ router.post('/:id', function (req, res, next) {
 })
 
 router.get('/:id', function (req, res, next) {
-  // find the author in Authors
-  // get all of the authors book_ids from Authors_Books
-  // get all of the authors books from BOOKs
-  // render the corresponding template
-  // use locals to pass books and author to the view
+  helpers.getAuthorBooks(req.params.id).then(function(author){
+    res.render('authors/show', {author: author, books: author.books});
+  })
 })
 
 module.exports = router;
